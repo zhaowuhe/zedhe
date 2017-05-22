@@ -1,0 +1,45 @@
+import sys,os
+
+#定义一个保存文件的函数
+def save_file(xiaoNa,xiaoBing,count):
+    file_name_xiaoBing = 'xiaoBing_'+str(count)+'.txt' #组织文件名
+    file_name_xiaoNa = 'xiaoNa_'+str(count)+'.txt' #组织文件名
+ 
+    xiaoBing_file = open(file_name_xiaoBing,'w') #文件写入操作 没有文件创建
+    xiaoNa_file = open(file_name_xiaoNa,'w')
+ 
+    xiaoBing_file.writelines(xiaoBing) #写入内容
+    xiaoNa_file.writelines(xiaoNa)
+ 
+    xiaoBing_file.close()
+    xiaoNa_file.close()
+#定义分割文件的函数
+def split_file(file_name):
+    f = open(file_name) #打开文件
+ 
+    xiaoBing = [] #定义接受小兵会话的数组
+    xiaoNa = [] #定义接受小娜会话的数组
+    count = 1 #定义文件数
+ 
+    for each_line in f:       
+        if each_line[:6]!='======':
+           (role,speakContent) = each_line.split(':',1) #split函数前面一个参数表示分割符号 后面一个表示分割次数
+           if role == '小兵':
+                xiaoBing.append(speakContent)
+           if role == '小娜':
+                xiaoNa.append(speakContent)
+        else:
+            #保存文件
+            save_file(xiaoNa,xiaoBing,count)
+ 
+            #重新初始化一下
+            xiaoBing = []
+            xiaoNa = []
+            count +=1
+             
+    #因为分割符号“======”在最后一个没有了 所以这里要保存最后一个文件的内容
+    save_file(xiaoNa,xiaoBing,count)
+    f.close()
+ 
+#调用函数执行功能
+split_file('record.txt')
