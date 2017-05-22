@@ -11,3 +11,5 @@ def get_topic():
                 print(i)
 
 get_topic()
+
+print("Hello world")
