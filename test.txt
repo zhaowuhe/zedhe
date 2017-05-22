@@ -1,0 +1,13 @@
+import sys,os
+import jieba,jieba.analyse
+def get_topic():
+    for dirpaths,dirname,files in os.walk('E:\\jiebatest'):
+        for item in files:
+            #user_id = item.split('.')[0]
+            file_name = os.path.join('E:\\jiebatest',item)
+            content = open(file_name,'r').read()
+            tags = jieba.analyse.extract_tags(content,1)
+            for i in tags:
+                print(i)
+
+get_topic()
